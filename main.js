@@ -58,16 +58,33 @@ let coinsList = [{name: "white_coin", value: 1, source:'sources/images/coins/whi
                  {name: "black_coin", value: 100, source:'sources/images/coins/black_coin.png'}]             
 
 
+let isAlive = false
 let playerCardsEl = document.getElementById("player-cards-el")
 let giverCardsEl = document.getElementById("giver-cards-el")
 let playerScoreEl = document.getElementById("player-score-el")
 let giverScoreEl = document.getElementById("giver-score-el")
+let playerResultEl = document.getElementById("player-result-el")
+let giverResultEl = document.getElementById("giver-result-el")
+
 
 let giver = {id:0, cards: [], sum: 0, hasBlackjack: false}
 let player = {id: 1, cards: [], sum: 0, hasBlackjack: false}
 
 
 function startGame(){
+
+    // set the game
+    isAlive = true
+
+    // clear the html
+
+    // reset player and giver
+    giver.cards = []
+    giver.sum = 0
+    giver.hasBlackjack = false
+    player.cards = []
+    player.sum = 0
+    player.hasBlackjack = false
     
     for (let i=0; i<2; i++){
         // giver draw
@@ -77,45 +94,87 @@ function startGame(){
         newCard(1)
     }
     
-    console.log(player)
-    console.log(giver)
-
     // render the game
     renderGame()
 }
 
 function newCard(id){
-    // get random card
-    let randomNumber = Math.floor(Math.random() * 52)
-    let randomCard = cardsList[randomNumber]
 
-    let elem = document.createElement("img")
-    elem.src = randomCard.source
+    if (isAlive === true){
+        // get random card
+        let randomNumber = Math.floor(Math.random() * 52)
+        let randomCard = cardsList[randomNumber]
+
+        let elem = document.createElement("img")
+        elem.src = randomCard.source
+        
+        if (id === 0){
+            // add the image in the html
+            giverCardsEl.appendChild(elem)
+
+            // update giver object
+            giver["cards"].push(randomCard)
+            giver.sum += randomCard["value"]
+        }
+        else{
+            // add the image in the html
+            playerCardsEl.appendChild(elem)
+
+
+            // update player object
+            player["cards"].push(randomCard)
+            player.sum += randomCard["value"]
+        }
+
+        // render the game
+        renderGame()
+    }
     
-    if (id === 0){
-        // add the image in the html
-        giverCardsEl.appendChild(elem)
-
-        // update giver object
-        giver["cards"].push(randomCard)
-        giver.sum += randomCard["value"]
-    }
-    else{
-        // add the image in the html
-        playerCardsEl.appendChild(elem)
-
-
-        // update player object
-        player["cards"].push(randomCard)
-        player.sum += randomCard["value"]
-    }
-
-    // render the game
-    renderGame()
 }
 
 function stay(){
 
+    if (isAlive === true){
+        // The player decide to stay with its cards and let the giver play
+        let randomNumber = Math.floor(Math.random()*2)  
+
+        // the giver draw a new card if 1
+        if (randomNumber === 1){
+            newCard(giver.id)
+        }
+
+        // render Game
+        renderGame()
+    }  
+}
+
+
+
+function hasBlackjack(id){
+
+    if (id===0){
+        if (giver.sum < 21){
+            return false
+        }
+        else if (giver.sum === 21){
+            return true
+        }
+        else{
+            return NaN
+        }
+    }
+    else{
+        if (player.sum < 21){
+            return false
+        }
+        else if (player.sum === 21){
+            return true
+        }
+        else{
+            return NaN
+        }
+    }
+    
 }
 
 
@@ -125,7 +184,35 @@ function renderGame(){
     playerScoreEl.textContent = "Score: " + player.sum
     giverScoreEl.textContent = "Score: " + giver.sum
 
-    // check if one of the player has a blackjack
+    // check if one of the players has a blackjack
+    giver.hasBlackjack = hasBlackjack(0)
+    player.hasBlackjack = hasBlackjack(1)
 
-
+    // render the result
+    if (giver.hasBlackjack === true && player.hasBlackjack === true){
+        playerResultEl.textContent = "It's a draw"
+    }
+    else if (giver.hasBlackjack === false && player.hasBlackjack === true){
+        playerResultEl.textContent = "You win!"
+    }
+    else if (giver.hasBlackjack === true && player.hasBlackjack === false){
+        playerResultEl.textContent = "You lost!"
+    }
+    else if ( isNaN(player.hasBlackjack)){
+        playerResultEl.textContent = "You lost!"
+    }
+    else if ( isNaN(giver.hasBlackjack === NaN)){
+        playerResultEl.textContent = "You Win!"
+    }
+    else{
+        if (player.sum === giver.sum){
+            playerResultEl.textContent = "It's a draw"
+        }
+        else if (player.sum > giver.sum){
+            playerResultEl.textContent = "You win!"
+        }
+        else{
+            playerResultEl.textContent = "You lost!"
+        }
+    }
 }
