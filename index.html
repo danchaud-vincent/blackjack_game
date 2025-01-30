@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="game-section">
+            <h1>BLACKJACK</h1>
+
+            <div class="player-section">
+                <p id="giver-score-el">Score: </p>
+
+                <div class="giver-cards" id="giver-cards-el">
+                </div>
+
+                <p id="giver-result-el"></p>
+            </div>
+
+            <div class="player-section">
+                <p id="player-score-el">Score: </p>
+
+                <div class="player-cards" id="player-cards-el">
+                </div>
+
+                <p id="player-result-el"></p>
+            </div>
+                
+            <button onclick="newCard(1)">NEW CARD</button>
+            <button>STAY</button>
+            <button onclick="startGame()">NEW GAME</button>
+        </div>
+
+        <script src="main.js"></script>
+    </body>
+</html>
