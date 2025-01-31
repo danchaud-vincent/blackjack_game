@@ -30,7 +30,7 @@ p{
 }
 
 img{
-    width: 150px;
+    width: 100px;
     margin: 0 20px;
 }
 
@@ -57,7 +57,7 @@ button{
 
 
 .game-section{
-    height: 800px;
+    height: 700px;
     width: 1200px;
     text-align: center;
     
@@ -67,7 +67,7 @@ button{
 }
 
 .player-container{
-    height: 250px;
+    height: 200px;
 }
 
 .button-container{
