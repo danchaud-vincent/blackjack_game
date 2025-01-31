@@ -8,30 +8,30 @@
     </head>
     <body>
         <div class="game-section">
-            <h1>BLACKJACK</h1>
+            <h1 id="title-el">BLACKJACK</h1>
 
-            <div class="player-section">
-                <p id="giver-score-el">Score: </p>
+            <div class="player-container">
+                <p id="giver-score-el">Score GIVER: </p>
 
                 <div class="giver-cards" id="giver-cards-el">
                 </div>
-
-                <p id="giver-result-el"></p>
             </div>
-
-            <div class="player-section">
-                <p id="player-score-el">Score: </p>
+            <div class="player-container">
+                <p id="player-score-el">Score PLAYER: </p>
 
                 <div class="player-cards" id="player-cards-el">
                 </div>
-
-                <p id="player-result-el"></p>
             </div>
-                
-            <button onclick="newCard(1)">NEW CARD</button>
-            <button onclick="stay()">STAY</button>
-            <button onclick="startGame()">NEW GAME</button>
+            
+            <div class="button-container">
+                <button onclick="newCard(1)">NEW CARD</button>
+                <button onclick="stand()">STAND</button>
+            </div>
+            
+            <button onclick="startGame()" id="btn-start">NEW GAME</button>
         </div>
+
+        
 
         <script src="main.js"></script>
     </body>
